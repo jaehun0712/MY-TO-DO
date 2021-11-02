@@ -8,7 +8,7 @@ $.ajax({
     url: "http://localhost:5000",  //전송
     dataType:"JSON", 
 })
-.done(function(data) { 
+.done(function(data) {  
     console.log(data);     
     todoList = data; 
     initial();        
