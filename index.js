@@ -5,18 +5,21 @@ let List , id , todoList;
 
 query();
 
-$.ajax({  
-    method : "GET",
-    url: "http://3.38.104.18:3000",  //전송  
-    //url: "http://localhost:3000",  //전송
-    dataType:"JSON", 
-})
-.done(function(data) {  
-    console.log(data);     
-    todoList = data; 
-    initial();        
-});
 
+function query() {
+    $.ajax({
+        method : "GET",
+        url: "http://3.38.104.18:3000",  //전송
+            //url: "http://localhost:3000",  //전송
+        dataType:"JSON", 
+    })
+    .done(function(data) {
+        console.log(data);
+        todoList = data;
+        initial();
+    });
+}
+ 
 function initial() {
     console.log(todoList);
 
@@ -48,25 +51,13 @@ function addToDo(name, id, done) {
     list_Selector.insertAdjacentHTML(position, item);
 }
 
-function query() {
-    $.ajax({
-        method : "GET",
-        url: "http://3.38.104.18:3000",  //전송
-        dataType:"JSON", 
-    })
-    .done(function(data) {
-        console.log(data);
-        todoList = data;
-        initial();
-    });
-}
 
 $('#button-addon2').click(function() { 
     var addTask = $("#addTask").val();
     alert(addTask);
     $.ajax({
         method : "GET",
-        url : 'http://3.38.104.18:3000/add?name${addTask}', 
+        url : 'http://3.38.104.18:3000/add?name=${addTask}', 
         dataType:"JSON", 
     })
     .done(function(data) {
