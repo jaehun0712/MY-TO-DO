@@ -3,6 +3,8 @@ const list_Selector = document.querySelector(".list-group");
 
 let List , id , todoList; 
 
+query();
+
 $.ajax({  
     method : "GET",
     url: "http://3.38.104.18:3000",  //전송  
@@ -46,21 +48,66 @@ function addToDo(name, id, done) {
     list_Selector.insertAdjacentHTML(position, item);
 }
 
-$('#button-addon2').click(function() {
-    var addTask = $("#addTask").val();
+function query() {
+    $.ajax({
+        method : "GET",
+        url: "http://3.38.104.18:3000",  //전송
+        dataType:"JSON", 
+    })
+    .done(function(data) {
+        console.log(data);
+        todoList = data;
+        initial();
+    });
+}
 
-    $ajax({
-        method : "GET", 
-        //url : 'http://localhost:3000/add?name${addTask}', 
+$('#button-addon2').click(function() { 
+    var addTask = $("#addTask").val();
+    alert(addTask);
+    $.ajax({
+        method : "GET",
         url : 'http://3.38.104.18:3000/add?name${addTask}', 
         dataType:"JSON", 
     })
     .done(function(data) {
         location.reload();
-    })
-    .always(function(xhr, status) {
-        alert("요청이 완료되었습니다.");
     });
-;
-
 });
+
+
+
+function initial() {
+    
+    // check if data is not empty
+    if (todoList) {
+        console.log("todoList",todoList);
+        id = todoList.length;
+        loadList(todoList);
+    } else {
+        todoList = [];
+        id = 0;
+    }
+    console.log("here",todoList);
+};
+
+
+function loadList(array) {
+    array.forEach(function (item) {
+        addToDo(item.name, item.id, item.done)
+    });
+};
+
+
+
+// add to do
+function addToDo(name, id, done) {
+
+    const item = `<li class="list-group-item">
+                    ${name}
+                    </li>
+                  `;
+    const position = "beforeend";
+    list_Selector.insertAdjacentHTML(position, item);
+};
+
+ 
