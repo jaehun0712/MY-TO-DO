@@ -51,7 +51,8 @@ $('#button-addon2').click(function() {
 
     $ajax({
         method : "GET", 
-        url : 'http://localhost:3000/add?name${addTask}', 
+        //url : 'http://localhost:3000/add?name${addTask}', 
+        url : 'http://3.38.104.18:3000/add?name${addTask}', 
         dataType:"JSON", 
     })
     .done(function(data) {
