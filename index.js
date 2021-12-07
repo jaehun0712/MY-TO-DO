@@ -6,6 +6,7 @@ let List , id , todoList;
 $.ajax({  
     method : "GET",
     url: "http://3.38.104.18:3000",  //전송  
+    //url: "http://localhost:3000",  //전송
     dataType:"JSON", 
 })
 .done(function(data) {  
@@ -44,3 +45,21 @@ function addToDo(name, id, done) {
     const position = "beforeend";
     list_Selector.insertAdjacentHTML(position, item);
 }
+
+$('#button-addon2').click(function() {
+    var addTask = $("#addTask").val();
+
+    $ajax({
+        method : "GET", 
+        url : 'http://localhost:3000/add?name${addTask}', 
+        dataType:"JSON", 
+    })
+    .done(function(data) {
+        location.reload();
+    })
+    .always(function(xhr, status) {
+        alert("요청이 완료되었습니다.");
+    });
+;
+
+});
